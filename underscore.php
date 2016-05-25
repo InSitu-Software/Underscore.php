@@ -306,21 +306,24 @@ class __ {
   
   
   // Flattens a multidimensional array
-  public function flatten($collection=null, $shallow=null) {
-    list($collection, $shallow) = self::_wrapArgs(func_get_args(), 2);
-    
-    $collection = self::_collection($collection);
-    
-    $return = array();
+  private function _flatten($collection, $shallow, &$return = []) {
     if(count($collection) > 0) {
       foreach($collection as $item) {
-        if(is_array($item)) {
-          $__ = new self;
-          $return = array_merge($return, ($shallow) ? $item : $__->flatten($item));
+        if(!$shallow && is_array($item)) {
+          $this->_flatten($item, $shallow, $return);
+        } else {
+          $return[] = $item;
         }
-        else $return[] = $item;
+        }
       }
-    }
+    return $return;
+  }
+  public function flatten($collection=null, $shallow=null) {
+  	list($collection, $shallow) = self::_wrapArgs(func_get_args(), 2);
+	$collection = self::_collection($collection);
+
+	$return = $this->_flatten($collection, $shallow);
+
     return self::_wrap($return);
   }
   
