@@ -1,0 +1,11 @@
+{
+	"version": "1.0.0",
+	"name": "insitu-software/underscore.php",
+	"description": "forked from http://brianhaveri.github.io/Underscore.php",
+	"license": "MIT",
+	"autoload": {
+		"files": [
+			"underscore.php"
+		]
+	}
+}
