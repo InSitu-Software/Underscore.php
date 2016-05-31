@@ -240,8 +240,8 @@ class __base {
 
     $collection = self::_collection($collection);
 
-    foreach ($collection as $val) {
-    	$result = is_null($iterator) ? $val : call_user_func($iterator, $val);
+    foreach ($collection as $key => $val) {
+    	$result = is_null($iterator) ? $val : call_user_func($iterator, $val, $key, $collection);
 
     	// non-strict comparison
     	if ($result == false) {
