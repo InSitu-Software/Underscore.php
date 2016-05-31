@@ -240,12 +240,16 @@ class __base {
 
     $collection = self::_collection($collection);
 
-    $__ = new self;
-    if(!is_null($iterator)) $collection = $__->map($collection, $iterator);
-    $collection = (array) $collection;
-    if(count($collection) === 0) return true;
+    foreach ($collection as $val) {
+    	$result = is_null($iterator) ? $val : call_user_func($iterator, $val);
 
-    return self::_wrap(is_bool(array_search(false, $collection, false)));
+    	// non-strict comparison
+    	if ($result == false) {
+    		return self::_wrap(false);
+    	}
+    }
+
+    return self::_wrap(true);
   }
 
 
